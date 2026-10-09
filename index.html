@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>نظام مباحث | Mabahith</title>
+<meta name="description" content="نظام مباحث: تطبيق لإعداد البحوث لطلبة العراق بإشراف مشرفين ذوي خبرة.">
+<meta name="theme-color" content="#043940">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --ink:#0d2a2e; --muted:#4f6a6e; --line:#d9d6cc;
+  --teal:#043940; --amber:#b87415; --amber-ink:#8a5509; --on-teal:#fff;
+  --hero:#043940; --hero-ink:#fff; --hero-muted:#b9d0d2;
+}
+:root[data-theme="dark"]{
+  --bg:#06191c; --surface:#0b2a2f; --ink:#e8f1f1; --muted:#9bb6b9; --line:#1c4147;
+  --amber-ink:#e0a043; --hero:#031f23; 
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{font-family:"IBM Plex Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.8;
+  padding-bottom:env(safe-area-inset-bottom,0);transition:background .3s,color .3s}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:var(--hero);color:var(--hero-ink);
+  padding-top:env(safe-area-inset-top,0);border-bottom:1px solid rgba(255,255,255,.08)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none}
+.brand img{width:34px;height:34px;border-radius:9px}
+.tools{display:flex;gap:8px}
+.tools button{background:rgba(255,255,255,.1);color:inherit;border:1px solid rgba(255,255,255,.18);height:38px;min-width:42px;padding:0 12px;
+  border-radius:10px;font:inherit;font-size:.9rem;cursor:pointer;transition:background .2s}
+.tools button:hover{background:rgba(255,255,255,.2)}
+
+/* hero */
+.hero{background:var(--hero);color:var(--hero-ink);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-top:56px;padding-bottom:72px}
+h1{font-size:clamp(2.2rem,5.5vw,3.8rem);line-height:1.25;font-weight:700}
+.lead{color:var(--hero-muted);font-size:1.1rem;max-width:34em;margin:16px 0 28px}
+.cta-zone{min-height:150px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--amber);color:#fff;border:0;border-radius:14px;
+  padding:15px 30px;font:inherit;font-weight:700;font-size:1.1rem;cursor:pointer;text-decoration:none;
+  box-shadow:0 8px 24px rgba(184,116,21,.35);transition:transform .15s,background .2s}
+.btn:hover{background:#c9811a;transform:translateY(-2px)}
+.btn:active{transform:none}
+.btn svg{width:22px;height:22px}
+.meta{margin-top:12px;color:var(--hero-muted);font-size:.9rem}
+.note{margin-top:10px;color:var(--hero-muted);font-size:.9rem;max-width:30em}
+
+/* countdown */
+.count{display:none;align-items:center;gap:20px}
+.count.on{display:flex}
+.ring{position:relative;width:96px;height:96px;flex:none}
+.ring svg{width:96px;height:96px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:7}
+.ring .bg{stroke:rgba(255,255,255,.15)}
+.ring .fg{stroke:var(--amber);stroke-linecap:round;stroke-dasharray:264;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:2.2rem}
+.count p{font-weight:500}
+.count button,.linkbtn{background:none;border:0;color:var(--hero-muted);text-decoration:underline;font:inherit;cursor:pointer;margin-top:4px;padding:0}
+.done{display:none}
+.done.on{display:block}
+.done h2{font-size:1.4rem;color:#fff}
+.done p{color:var(--hero-muted);margin:6px 0;max-width:32em}
+.done a{color:#f2b95a}
+
+/* hero art */
+.art{justify-self:center;width:min(100%,380px)}
+.art svg{width:100%;height:auto;display:block;border-radius:36px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.lens{animation:scan 7s ease-in-out infinite;transform-box:fill-box}
+.hl{animation:hl 7s ease-in-out infinite}
+@keyframes scan{0%,100%{transform:translate(0,0)}30%{transform:translate(-92px,-30px)}55%{transform:translate(-30px,-8px)}80%{transform:translate(-120px,-18px)}}
+@keyframes hl{0%,100%{opacity:0}30%,40%{opacity:.9}55%,65%{opacity:.9}80%,90%{opacity:.9}}
+.art .l1{animation-delay:0s}
+
+/* sections */
+section{padding:72px 0}
+h2.t{font-size:clamp(1.6rem,3.5vw,2.2rem);line-height:1.4;margin-bottom:8px}
+.sub{color:var(--muted);max-width:38em;margin-bottom:36px}
+.feat{border-top:1px solid var(--line)}
+.feat div{display:grid;grid-template-columns:64px 1fr;gap:16px;padding:22px 0;border-bottom:1px solid var(--line);align-items:start}
+.feat svg{width:40px;height:40px;stroke:var(--amber-ink);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.feat h3{font-size:1.15rem}
+.feat p{color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:s;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
+.steps li{list-style:none;padding:28px 24px;counter-increment:s;border-inline-end:1px solid var(--line)}
+.steps li:last-child{border:0}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;margin-bottom:12px}
+:root[data-theme="dark"] .steps li::before{background:var(--amber)}
+.steps h3{font-size:1.05rem}
+.steps p{color:var(--muted);font-size:.95rem}
+.contact{background:var(--hero);color:var(--hero-ink)}
+.contact .sub{color:var(--hero-muted)}
+.ways{display:flex;flex-wrap:wrap;gap:12px}
+.ways a{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:12px;text-decoration:none;font-weight:500;
+  border:1px solid rgba(255,255,255,.28);transition:background .2s}
+.ways a:hover{background:rgba(255,255,255,.12)}
+.ways a.wa{background:#1f9d55;border-color:#1f9d55;color:#fff}
+.ways a.wa:hover{background:#25b062}
+.ways svg{width:20px;height:20px;fill:currentColor}
+.num{direction:ltr;unicode-bidi:isolate}
+footer{padding:22px 0;text-align:center;color:var(--muted);font-size:.9rem}
+
+@media (max-width:820px){
+  .hero .wrap{grid-template-columns:1fr;padding-top:36px;padding-bottom:48px}
+  .art{order:-1;width:min(70%,260px)}
+  .steps{grid-template-columns:1fr}
+  .steps li{border-inline-end:0;border-bottom:1px solid var(--line)}
+  .btn{width:100%}
+  section{padding:52px 0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hl{opacity:.9!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top"><img src="logo.png" alt="" width="34" height="34"><span data-i="brand">نظام مباحث</span></a>
+    <div class="tools">
+      <button id="lang" type="button" aria-label="Language">EN</button>
+      <button id="theme" type="button" aria-label="Theme"><span id="themeIcon">🌙</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <h1 data-i="h1">بحثك الجامعي، بإشراف من سبقوك</h1>
+      <p class="lead" data-i="lead">نظام مباحث تطبيق لإعداد البحوث لطلبة العراق، يرافقك فيه مشرفون لديهم خبرة سابقة من أول فكرة حتى التسليم.</p>
+
+      <div class="cta-zone">
+        <div id="ctaBox">
+          <button class="btn" id="mainBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+            <span id="mainLabel" data-i="dl">تحميل التطبيق</span>
+          </button>
+          <p class="meta" id="meta"></p>
+          <p class="note" id="note"></p>
+        </div>
+
+        <div class="count" id="count" role="status" aria-live="polite">
+          <div class="ring">
+            <svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" id="fg" cx="50" cy="50" r="42"/></svg>
+            <b id="sec">5</b>
+          </div>
+          <div>
+            <p data-i="starting">سيبدأ التحميل خلال لحظات…</p>
+            <button type="button" id="cancel" data-i="cancel">إلغاء</button>
+          </div>
+        </div>
+
+        <div class="done" id="done">
+          <h2 data-i="started">بدأ التحميل</h2>
+          <p data-i="install">بعد انتهائه افتح الملف من إشعارات التنزيل، وإذا طلب الهاتف فعّل «السماح بالتثبيت من هذا المصدر».</p>
+          <p><span data-i="nostart">لم يبدأ؟</span> <a id="manual" href="mabahith.apk" download data-i="retry">اضغط هنا للتحميل يدويًا</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="art" aria-hidden="true">
+      <svg viewBox="0 0 512 512">
+        <rect width="512" height="512" fill="#043940"/>
+        <polygon points="96,152 254,128 254,300 96,320" fill="#fff"/>
+        <polygon points="254,128 412,152 410,322 254,300" fill="#fff"/>
+        <g stroke="#d6d6d6" stroke-width="6" stroke-linecap="round">
+          <line x1="128" y1="192" x2="234" y2="196"/><line x1="128" y1="211" x2="234" y2="213"/><line x1="128" y1="230" x2="234" y2="232"/>
+          <line x1="272" y1="196" x2="378" y2="192"/><line x1="272" y1="213" x2="378" y2="211"/><line x1="272" y1="232" x2="378" y2="230"/>
+        </g>
+        <g class="hl" stroke="#e8a33d" stroke-width="6" stroke-linecap="round">
+          <line x1="272" y1="196" x2="378" y2="192"/><line x1="272" y1="213" x2="378" y2="211"/><line x1="272" y1="232" x2="378" y2="230"/>
+        </g>
+        <g class="lens">
+          <circle cx="346" cy="332" r="82" fill="rgba(255,255,255,.08)" stroke="#b87415" stroke-width="24"/>
+          <line x1="406" y1="392" x2="456" y2="442" stroke="#b87415" stroke-width="26" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <h2 class="t" data-i="ft">ما الذي يقدمه لك؟</h2>
+    <p class="sub" data-i="fs">كل ما يحتاجه الطالب لإنجاز بحثه في مكان واحد، وبلغة تناسب الجامعات العراقية.</p>
+    <div class="feat">
+      <div>
+        <svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h12v16H6a2 2 0 00-2 2V5z"/><path d="M8 7h6M8 11h6"/></svg>
+        <span><h3 data-i="f1t">إعداد البحوث</h3><p data-i="f1d">ابدأ من العنوان والخطة ثم المحتوى، بتنظيم يوافق متطلبات البحث الجامعي.</p></span>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.900 1.900 6.500 5.500"/><path d="M16 4.500a3.500 3.500 0 010 7M18.500 14.800c1.800.7 2.800 2.400 3 5.200"/></svg>
+        <span><h3 data-i="f2t">مشرفون ذوو خبرة</h3><p data-i="f2d">يتابع بحثك مشرفون سبق لهم العمل في البحوث، فتحصل على توجيه عملي لا نظري فقط.</p></span>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <span><h3 data-i="f3t">مراجعة وتدقيق</h3><p data-i="f3d">تُراجع الصياغة والمصادر والترتيب قبل التسليم لتقلّ الملاحظات عليك.</p></span>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.500"/><path d="M11 18h2"/></svg>
+        <span><h3 data-i="f4t">من هاتفك مباشرة</h3><p data-i="f4d">تطبيق أندرويد خفيف، تتابع به بحثك أينما كنت دون حاجة إلى حاسوب.</p></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="t" data-i="ht">كيف تبدأ؟</h2>
+    <p class="sub" data-i="hs">ثلاث خطوات فقط.</p>
+    <ol class="steps" style="padding:0">
+      <li><h3 data-i="s1t">حمّل التطبيق</h3><p data-i="s1d">اضغط زر التحميل وانتظر العدّاد 5 ثوانٍ.</p></li>
+      <li><h3 data-i="s2t">ثبّته وافتحه</h3><p data-i="s2d">افتح الملف من الإشعارات وفعّل التثبيت من المصدر إن طُلب.</p></li>
+      <li><h3 data-i="s3t">ابدأ بحثك</h3><p data-i="s3d">اختر موضوعك وتواصل مع المشرف المناسب.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2 class="t" data-i="ct">تفضّل بالتواصل معنا</h2>
+    <p class="sub" data-i="cs">أي سؤال عن التطبيق أو عن بحثك، نحن بالانتظار.</p>
+    <div class="ways">
+      <a class="wa" href="https://wa.me/9647850301324" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.500 15.200L2 22l4.900-1.500A10 10 0 1012 2zm5.200 14.200c-.2.600-1.300 1.200-1.800 1.200-.5.100-1 .2-3.300-.7-2.800-1.100-4.500-4-4.700-4.200-.1-.2-1.100-1.500-1.100-2.800s.7-2 1-2.200c.2-.3.500-.3.700-.3h.5c.2 0 .4 0 .6.500l.8 1.900c.1.200.1.400 0 .5l-.3.500-.4.400c-.1.200-.3.300-.1.600.2.300.8 1.300 1.700 2.100 1.200 1 2.100 1.300 2.400 1.500.3.100.5.100.6-.1l.9-1.100c.2-.3.400-.2.600-.1l1.800.9c.3.100.5.200.5.300.1.200.1.700-.1 1.400z"/></svg>
+        <span data-i="wa">واتساب</span></a>
+      <a href="tel:+9647850301324">
+        <svg viewBox="0 0 24 24"><path d="M6.600 10.800a15 15 0 006.600 6.600l2.200-2.200a1 1 0 011-.25 11 11 0 003.500.56 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.500a1 1 0 011 1c0 1.200.2 2.400.56 3.500a1 1 0 01-.25 1z"/></svg>
+        <span class="num">0785 030 1324</span></a>
+      <a id="webLink" href="https://p0y0q.pythonanywhere.com/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.900 9h-3a15 15 0 00-1.200-5A8 8 0 0118.900 11zM12 4c.8 1 1.600 3 1.900 7h-3.800C10.400 7 11.200 5 12 4zM4.100 13h3a15 15 0 001.200 5A8 8 0 014.100 13zm3-2h-3A8 8 0 018.300 6a15 15 0 00-1.200 5zM12 20c-.8-1-1.600-3-1.900-7h3.800c-.3 4-1.100 6-1.900 7zm3.700-2a15 15 0 001.200-5h3A8 8 0 0115.700 18z"/></svg>
+        <span data-i="web">افتح النسخة على المتصفح</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span data-i="foot">© نظام مباحث، العراق</span></div></footer>
+
+<script>
+(function(){
+  var WEB = "https://p0y0q.pythonanywhere.com/";
+  var APK = "mabahith.apk";
+  var T = {
+    ar:{brand:"نظام مباحث",h1:"بحثك الجامعي، بإشراف من سبقوك",
+      lead:"نظام مباحث تطبيق لإعداد البحوث لطلبة العراق، يرافقك فيه مشرفون لديهم خبرة سابقة من أول فكرة حتى التسليم.",
+      dl:"تحميل التطبيق",open:"افتح نظام مباحث من المتصفح",
+      metaA:"أندرويد · ملف APK · 8.3 ميغابايت",
+      noteA:"التحميل مباشر من هذه الصفحة.",
+      noteI:"التطبيق متوفر لأندرويد حاليًا، ويمكنك استخدام النظام كاملًا من المتصفح على الآيفون.",
+      noteD:"التطبيق مخصص لهواتف أندرويد، ويمكنك استخدام النظام كاملًا من المتصفح على الحاسوب.",
+      starting:"سيبدأ التحميل خلال لحظات…",cancel:"إلغاء",started:"بدأ التحميل",
+      install:"بعد انتهائه افتح الملف من إشعارات التنزيل، وإذا طلب الهاتف فعّل «السماح بالتثبيت من هذا المصدر».",
+      nostart:"لم يبدأ؟",retry:"اضغط هنا للتحميل يدويًا",
+      ft:"ما الذي يقدمه لك؟",fs:"كل ما يحتاجه الطالب لإنجاز بحثه في مكان واحد، وبلغة تناسب الجامعات العراقية.",
+      f1t:"إعداد البحوث",f1d:"ابدأ من العنوان والخطة ثم المحتوى، بتنظيم يوافق متطلبات البحث الجامعي.",
+      f2t:"مشرفون ذوو خبرة",f2d:"يتابع بحثك مشرفون سبق لهم العمل في البحوث، فتحصل على توجيه عملي لا نظري فقط.",
+      f3t:"مراجعة وتدقيق",f3d:"تُراجع الصياغة والمصادر والترتيب قبل التسليم لتقلّ الملاحظات عليك.",
+      f4t:"من هاتفك مباشرة",f4d:"تطبيق أندرويد خفيف، تتابع به بحثك أينما كنت دون حاجة إلى حاسوب.",
+      ht:"كيف تبدأ؟",hs:"ثلاث خطوات فقط.",
+      s1t:"حمّل التطبيق",s1d:"اضغط زر التحميل وانتظر العدّاد 5 ثوانٍ.",
+      s2t:"ثبّته وافتحه",s2d:"افتح الملف من الإشعارات وفعّل التثبيت من المصدر إن طُلب.",
+      s3t:"ابدأ بحثك",s3d:"اختر موضوعك وتواصل مع المشرف المناسب.",
+      ct:"تفضّل بالتواصل معنا",cs:"أي سؤال عن التطبيق أو عن بحثك، نحن بالانتظار.",
+      wa:"واتساب",web:"افتح النسخة على المتصفح",foot:"© نظام مباحث، العراق"},
+    en:{brand:"Mabahith",h1:"Your university research, guided by those who've done it",
+      lead:"Mabahith is an app for preparing research papers for students in Iraq, with experienced supervisors beside you from the first idea to submission.",
+      dl:"Download the app",open:"Open Mabahith in your browser",
+      metaA:"Android · APK file · 8.3 MB",
+      noteA:"Direct download from this page.",
+      noteI:"The app is Android-only for now. On iPhone you can use the full system in your browser.",
+      noteD:"The app is made for Android phones. On a computer you can use the full system in your browser.",
+      starting:"Your download starts in a moment…",cancel:"Cancel",started:"Download started",
+      install:"When it finishes, open the file from your notifications. If asked, allow installing from this source.",
+      nostart:"Didn't start?",retry:"Tap here to download manually",
+      ft:"What you get",fs:"Everything a student needs to finish a research paper, in one place, built for Iraqi universities.",
+      f1t:"Research preparation",f1d:"Go from title and outline to full content, organised to meet university requirements.",
+      f2t:"Experienced supervisors",f2d:"Supervisors with prior research experience follow your work and give practical guidance.",
+      f3t:"Review and proofing",f3d:"Wording, sources and structure are checked before you submit, so you get fewer comments.",
+      f4t:"Right from your phone",f4d:"A light Android app to follow your research anywhere, no computer needed.",
+      ht:"How to start",hs:"Just three steps.",
+      s1t:"Download the app",s1d:"Tap download and wait for the 5-second timer.",
+      s2t:"Install and open",s2d:"Open the file from notifications and allow the install if asked.",
+      s3t:"Start your research",s3d:"Pick your topic and contact the right supervisor.",
+      ct:"Get in touch",cs:"Any question about the app or your research, we're here.",
+      wa:"WhatsApp",web:"Open the browser version",foot:"© Mabahith, Iraq"}
+  };
+
+  var ua = navigator.userAgent || "";
+  var isIOS = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+  var isAndroid = !isIOS && /Android/i.test(ua);
+  var mode = isAndroid ? "android" : (isIOS ? "ios" : "desktop");
+
+  var root = document.documentElement, lang = "ar", theme = null;
+  function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+  function $(id){return document.getElementById(id)}
+
+  function applyLang(){
+    var d = T[lang];
+    root.lang = lang; root.dir = lang === "ar" ? "rtl" : "ltr";
+    document.querySelectorAll("[data-i]").forEach(function(el){
+      var k = el.getAttribute("data-i"); if(d[k] != null) el.textContent = d[k];
+    });
+    $("lang").textContent = lang === "ar" ? "EN" : "ع";
+    $("mainLabel").textContent = mode === "android" ? d.dl : d.open;
+    $("meta").textContent = mode === "android" ? d.metaA : "";
+    $("note").textContent = mode === "android" ? d.noteA : (mode === "ios" ? d.noteI : d.noteD);
+    document.title = lang === "ar" ? "نظام مباحث | Mabahith" : "Mabahith | Research app for Iraqi students";
+  }
+  function applyTheme(){
+    root.setAttribute("data-theme", theme);
+    $("themeIcon").textContent = theme === "dark" ? "☀️" : "🌙";
+  }
+
+  lang = get("mb-lang") || "ar";
+  theme = get("mb-theme") || (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  applyTheme(); applyLang();
+
+  $("lang").onclick = function(){lang = lang === "ar" ? "en" : "ar"; set("mb-lang", lang); applyLang();};
+  $("theme").onclick = function(){theme = theme === "dark" ? "light" : "dark"; set("mb-theme", theme); applyTheme();};
+
+  // Download logic
+  var timer = null, left = 5;
+  var box = $("ctaBox"), count = $("count"), done = $("done"), fg = $("fg"), sec = $("sec");
+
+  function startDownload(){
+    var a = document.createElement("a");
+    a.href = APK; a.setAttribute("download", APK); a.style.display = "none";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    count.classList.remove("on"); done.classList.add("on");
+  }
+  function tick(){
+    left--;
+    sec.textContent = left;
+    fg.style.strokeDashoffset = 264 * (5 - left) / 5;
+    if(left <= 0){clearInterval(timer); timer = null; startDownload();}
+  }
+  function begin(){
+    left = 5; sec.textContent = 5; fg.style.strokeDashoffset = 0;
+    box.style.display = "none"; done.classList.remove("on"); count.classList.add("on");
+    timer = setInterval(tick, 1000);
+  }
+  function cancel(){
+    clearInterval(timer); timer = null;
+    count.classList.remove("on"); box.style.display = "";
+  }
+
+  $("mainBtn").onclick = function(){
+    if(mode === "android"){ if(!timer) begin(); }
+    else { window.location.href = WEB; }   // iPhone and computers: open the web system
+  };
+  $("cancel").onclick = cancel;
+})();
+</script>
+</body>
+</html>
